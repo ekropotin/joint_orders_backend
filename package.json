@@ -1,0 +1,25 @@
+{
+  "name": "joint_orders_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ekropotin/joint_orders_backend.git"
+  },
+  "author": "Evgeny Kropotin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ekropotin/joint_orders_backend/issues"
+  },
+  "homepage": "https://github.com/ekropotin/joint_orders_backend#readme",
+  "devDependencies ": {
+    "body-parser": "^1.16.0",
+    "express": "^4.14.0",
+    "mongoose": "^4.7.8",
+    "node-restful": "^0.2.5"
+  }
+}

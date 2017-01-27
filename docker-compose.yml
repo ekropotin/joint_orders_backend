@@ -1,0 +1,13 @@
+version: '1'
+
+services:
+  api:
+    build:
+      dockerfile: Dockerfile_web_dev
+    ports:
+      - "3000:3000"
+
+  database:
+    image: mongo
+    ports:
+      - "27017:27017"
