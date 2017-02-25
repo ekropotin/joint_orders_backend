@@ -2,4 +2,6 @@ version: '2'
 
 services:
   api:
+    environment:
+      - NODE_ENV=test
     entrypoint: npm test

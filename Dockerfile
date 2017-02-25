@@ -4,8 +4,10 @@ FROM node:7
 # Create a directory where our app will be placed
 RUN mkdir -p /usr/src/app
 
+ENV NODE_ENV=production
+
 # Get all the code needed to run the app
-COPY . /usr/src/app
+COPY ./app /usr/src/app
 
 # Change directory so that our commands run inside this new directory
 WORKDIR /usr/src/app
