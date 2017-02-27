@@ -1,9 +1,8 @@
-const mongoose = require("mongoose");
 const Products = require('../models/product');
-
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../server');
+
 const should = chai.should();
 const assert = chai.assert;
 
