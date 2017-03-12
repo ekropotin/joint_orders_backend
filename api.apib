@@ -1,0 +1,134 @@
+FORMAT: 1A
+HOST: http://orders.apiblueprint.org/
+
+# Joint orders
+
+## Data Structures
+
+### Supplier
++ _id: 1
++ name: Шаурма на Средном
++ description: Best shaurma in NN!
++ address: `Костина, 13`
++ phone_numbers: `+7-910-895-01-66`, `+7(831)433-05-64` (array[string])
++ rating: 4.75 (number)
+
+### MenuItem
++ _id: 1
++ name: Шаурма со свининой стандартная
++ base_price: 140 (number)
+
+### MenuItemOption
++ _id: 1
++ name: без лука
++ price: 0 (number)
+
+## Suppliers collection [/suppliers]
+
+### List All Suppliers [GET]
+
++ Response 200 (application/json)
+    + Attributes (array[Supplier])
+
+### Create a New Supplier [POST]
+
++ Request (application/json)
+    + Attributes
+        + name: Шаурма на Средном (required)
+        + description: Best shaurma in NN!
+        + address: `Костина, 13`
+        + phone_numbers: `+7-910-895-01-66`, `+7(831)433-05-64` (required, array[string])
+        + rating: 4.75 (number)
+
++ Response 201 (application/json)
+    + Headers
+
+            Location: /suppliers/507f1f77bcf86cd799439011
+
+    + Attributes (Supplier)
+
+### Get a supplier [GET /suppliers/{id}]
+
++ Response 200 (application/json)
+    + Attributes (Supplier)
+
+### Update a Supplier [PUT /suppliers/{id}]
++ Parameters
+    + id: 507f1f77bcf86cd799439011 (string) supplier's id
+
++ Request (application/json)
+    + Attributes
+        + name: Шаурма на Средном
+        + description: Best shaurma in NN!
+        + address: `Костина, 13`
+        + phone_numbers: `+7-910-895-01-66`, `+7(831)433-05-64` (array[string])
+        + rating: 4.75 (number)
+
++ Response 200 (application/json)
+    + Attributes (Supplier)
+
+### Delete a Supplier [DELETE /suppliers/{id}]
++ Parameters
+    + id: 507f1f77bcf86cd799439011 (string) supplier's id
+
++ Response 204
+
+## Menu collection [/suppliers/{id}/menu_items]
+
+### List All Menu [GET]
++ Parameters
+    + id: 507f1f77bcf86cd799439011 (string) supplier id
+
++ Response 200 (application/json)
+    + Attributes (array[MenuItem])
+
+### Create a new menu item [POST]
+
++ Request (application/json)
+    + Attributes
+        + name: Шаурма со свининой стандартная (required)
+        + base_price: 140 (required, number)
+
++ Response 201 (application/json)
+    + Headers
+
+            Location: /suppliers/507f1f77bcf86cd799439011/menu_items/808f1f77bcf86cd799439124
+
+    + Attributes (MenuItem)
+
+### Get a menu item [GET /suppliers/{supplier_id}/menu_items/{menu_item_id}]
+
++ Response 200 (application/json)
+    + Attributes (MenuItem)
+
+### Update a menu item [PUT /suppliers/{supplier_id}/menu_items/{menu_item_id}]
++ Parameters
+    + supplier_id: 507f1f77bcf86cd799439011 (number) supplier id
+    + menu_item_id: 808f1f77bcf86cd799439124 (number) menu item id
+
++ Request (application/json)
+    + Attributes
+        + name: Шаурма со свининой стандартная
+        + base_price: 140 (number)
+
++ Response 200 (application/json)
+    + Attributes (MenuItem)
+
+### Delete a menu item [DELETE /suppliers/{supplier_id}/menu_items/{menu_item_id}]
++ Parameters
+    + supplier_id: 507f1f77bcf86cd799439011 (number) supplier id
+    + menu_item_id: 808f1f77bcf86cd799439124 (number) menu item id
+
++ Response 204
+
+## Menu options collection [/suppliers/{supplier_id}/menu_items/{menu_item_id}/options]
+
+### List All Menu options[GET]
++ Parameters
+    + supplier_id: 507f1f77bcf86cd799439011 (number) supplier id
+    + menu_item_id: 808f1f77bcf86cd799439124 (number) menu item id
+
++ Response 200 (application/json)
+    + Attributes (array[MenuItemOption])
+
+

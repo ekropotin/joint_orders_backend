@@ -1,19 +1,21 @@
 const AppContext = require('../data/appContext');
 const UserModel = require('../models/user');
 const encryptUtils = require('../utils/encrypt');
+const UserRoles = require('../constants/userRoles');
 
 const ADMIN_USER_NAME = 'admin';
 
 exports.checkSecret = (req, res) => {
+  console.info(`Access to secret from address ${req.connection.remoteAddress}. Provided secret: ${req.params.secret}`);
   if (req.params.secret !== AppContext.secret) {
     res.statusCode = 404;
-    //  TODO: Log acces to secret
     return res.send({ error: 'Wrong secret' });
   }
   return res.send('OK');
 };
 
 exports.createAdmin = (req, res) => {
+  console.info(`Request to create admin from address ${req.connection.remoteAddress}.`);
   const password = req.body.password;
   if (!password) {
     res.statusCode = 400;
@@ -32,8 +34,7 @@ exports.createAdmin = (req, res) => {
 
     const admin = new UserModel({
       name: ADMIN_USER_NAME,
-      //  TODO: enum
-      role: 'ADMIN',
+      role: UserRoles.ADMIN,
       password_hash: encryptUtils.hashPassword(password)
     });
 
