@@ -6,22 +6,41 @@ HOST: http://orders.apiblueprint.org/
 ## Data Structures
 
 ### Supplier
-+ _id: 1
++ id: 1 (number)
 + name: Шаурма на Средном
 + description: Best shaurma in NN!
-+ address: `Костина, 13`
++ address: `Костина, 13par
 + phone_numbers: `+7-910-895-01-66`, `+7(831)433-05-64` (array[string])
 + rating: 4.75 (number)
 
 ### MenuItem
-+ _id: 1
++ id: 1 (number)
 + name: Шаурма со свининой стандартная
 + base_price: 140 (number)
 
 ### MenuItemOption
-+ _id: 1
++ id: 1 (number)
 + name: без лука
 + price: 0 (number)
+
+### OrderStatus (enum)
+- GATHERING (string)
+- LOCKED (string)
+- ORDERED (string)
+- COMPLETED (string)
+
+### Order
++ id: 1 (number)
++ status: GATHERING (OrderStatus) - Possible values
++ estimated_delivery: 1491052727 (number)
++ owner_id: 1 (number)
++ supplier_id: 1 (number)
+
+### OrderItem
++ id: 1 (number)
++ menu_item_id: 1 (number) - menu item id
++ options: [1, 2, 3] (array[number])  - list of item options
+
 
 ## Suppliers collection [/suppliers]
 
@@ -43,18 +62,20 @@ HOST: http://orders.apiblueprint.org/
 + Response 201 (application/json)
     + Headers
 
-            Location: /suppliers/507f1f77bcf86cd799439011
+            Location: /suppliers/1
 
     + Attributes (Supplier)
 
 ### Get a supplier [GET /suppliers/{id}]
++ Parameters
+    + id: 1 (number) supplier's id
 
 + Response 200 (application/json)
     + Attributes (Supplier)
 
 ### Update a Supplier [PUT /suppliers/{id}]
 + Parameters
-    + id: 507f1f77bcf86cd799439011 (string) supplier's id
+    + id: 1 (number) supplier's id
 
 + Request (application/json)
     + Attributes
@@ -69,15 +90,15 @@ HOST: http://orders.apiblueprint.org/
 
 ### Delete a Supplier [DELETE /suppliers/{id}]
 + Parameters
-    + id: 507f1f77bcf86cd799439011 (string) supplier's id
+    + id: 1 (number) supplier's id
 
 + Response 204
 
 ## Menu collection [/suppliers/{id}/menu_items]
++ Parameters
+    + id: 1 (number) supplier id
 
 ### List All Menu [GET]
-+ Parameters
-    + id: 507f1f77bcf86cd799439011 (string) supplier id
 
 + Response 200 (application/json)
     + Attributes (array[MenuItem])
@@ -92,19 +113,22 @@ HOST: http://orders.apiblueprint.org/
 + Response 201 (application/json)
     + Headers
 
-            Location: /suppliers/507f1f77bcf86cd799439011/menu_items/808f1f77bcf86cd799439124
+            Location: /suppliers/1/menu_items/1
 
     + Attributes (MenuItem)
 
 ### Get a menu item [GET /suppliers/{supplier_id}/menu_items/{menu_item_id}]
++ Parameters
+    + supplier_id: 1 (number) supplier id
+    + menu_item_id: 1 (number) menu item id
 
 + Response 200 (application/json)
     + Attributes (MenuItem)
 
 ### Update a menu item [PUT /suppliers/{supplier_id}/menu_items/{menu_item_id}]
 + Parameters
-    + supplier_id: 507f1f77bcf86cd799439011 (number) supplier id
-    + menu_item_id: 808f1f77bcf86cd799439124 (number) menu item id
+    + supplier_id: 1 (number) supplier id
+    + menu_item_id: 1 (number) menu item id
 
 + Request (application/json)
     + Attributes
@@ -116,19 +140,169 @@ HOST: http://orders.apiblueprint.org/
 
 ### Delete a menu item [DELETE /suppliers/{supplier_id}/menu_items/{menu_item_id}]
 + Parameters
-    + supplier_id: 507f1f77bcf86cd799439011 (number) supplier id
-    + menu_item_id: 808f1f77bcf86cd799439124 (number) menu item id
+    + supplier_id: 1 (number) supplier id
+    + menu_item_id: 1 (number) menu item id
 
 + Response 204
 
 ## Menu options collection [/suppliers/{supplier_id}/menu_items/{menu_item_id}/options]
++ Parameters
+    + supplier_id: 1 (number) supplier id
+    + menu_item_id: 1 (number) menu item id
 
 ### List All Menu options[GET]
-+ Parameters
-    + supplier_id: 507f1f77bcf86cd799439011 (number) supplier id
-    + menu_item_id: 808f1f77bcf86cd799439124 (number) menu item id
 
 + Response 200 (application/json)
     + Attributes (array[MenuItemOption])
 
+### Create a new menu item [POST]
 
++ Request (application/json)
+    + Attributes
+        + name: Без лука (required)
+        + price: 0 (required, number)
+
++ Response 201 (application/json)
+    + Headers
+
+            Location: /suppliers/1/menu_items/1/options/1
+
+    + Attributes (MenuItemOption)
+
+### Update a menu item [PUT /suppliers/{supplier_id}/menu_items/{menu_item_id}/options/{menu_option_id}]
++ Parameters
+    + supplier_id: 1 (number) supplier id
+    + menu_item_id: 1 (number) menu item id
+    + menu_option_id: 1 (number) menu option id
+
++ Request (application/json)
+    + Attributes
+        + name: Без лука
+        + price: 0 (number)
+
++ Response 200 (application/json)
+    + Attributes (MenuItemOption)
+
+### Delete a menu item [DELETE /suppliers/{supplier_id}/menu_items/{menu_item_id}/options/{menu_option_id}]
++ Parameters
+    + supplier_id: 1 (number) supplier id
+    + menu_item_id: 1 (number) menu item id
+    + menu_option_id: 1 (number) menu option id
+
++ Response 204
+
+## Orders collection [/orders]
+
+### List All Orders [GET]
+
++ Response 200 (application/json)
+    + Attributes (array[Order])
+
+### Create a new Order [POST]
+
++ Request (application/json)
+    + Attributes (Order)
+
++ Response 201 (application/json)
+    + Headers
+
+            Location: /orders/1
+
+    + Attributes (Order)
+
+### Get an order [GET /orders/{id}]
++ Parameters
+    + id: 1 (number) order's id
+
++ Response 200 (application/json)
+    + Attributes (Order)
+
+### Update an Order [PUT /orders/{id}]
++ Parameters
+    + id: 1 (number) order's id
+
++ Request (application/json)
+    + Attributes (Order)
+
++ Response 200 (application/json)
+    + Attributes (Order)
+
+### Delete an Order [DELETE /orders/{id}]
++ Parameters
+    + id: 1 (number) order's id
+
++ Response 204
+
+## Order's participants collection [/orders/{id}/participants]
++ Parameters
+    + id: 1 (number) order id
+
+### List All participants [GET]
+
++ Response 200 (application/json)
+    + Attributes (array[number])
+
+### Add user to the order [POST]
+
++ Request (application/json)
+    + Attributes (number)
+
++ Response 201 (application/json)
+    + Headers
+
+            Location: /orders/1/participants/1
+
+    + Attributes (array[number])
+
+### Remove user from the order [DELETE /orders/{order_id}/participants/{participant_id}]
++ Parameters
+    + order_id: 1 (number) order's id
+    + participant_id: 1 (number) participant id
+
++ Response 204
+    + Attributes (array[number])
+
+## Order items collection [/orders/{order_id}/participants/{participant_id}]
++ Parameters
+    + order_id: 1 (number) order's id
+    + participant_id: 1 (number) participant id
+
+### Get an order of the participant [GET]
+
++ Response 200 (application/json)
+    + Attributes (array[OrderItem])
+
+### Add menu item in the order [POST]
+
++ Request (application/json)
+    + Attributes
+        + menu_item_id: 1 (required, number)
+        + options: [1, 2, 3] (required, array[number])
+
++ Response 201 (application/json)
+    + Headers
+
+            Location: /orders/1/participants/1
+
+    + Attributes (MenuItem)
+
+### Update an options for order item [PUT /orders/{order_id}/participants/{participant_id}/items/{order_item_id}]
++ Parameters
+    + order_id: 1 (number) order's id
+    + participant_id: 1 (number) participant id
+    + order_item_id: 1 (number) order item id
+
++ Request (application/json)
+    + Attributes
+        + options: [1, 2, 3] (required, array[number])
+
++ Response 200 (application/json)
+    + Attributes (OrderItem)
+
+### Delete a menu item [DELETE /orders/{order_id}/participants/{participant_id}/items/{order_item_id}]
++ Parameters
+    + order_id: 1 (number) order's id
+    + participant_id: 1 (number) participant id
+    + order_item_id: 1 (number) order item id
+
++ Response 204

@@ -1,0 +1,31 @@
+/orders/1/
+
+status
+deliver_time
+owner
+supplier_id
+
+
+GET /orders/1/participants
+=> [1, 3, 5, 6] - array of user id's
+POST
+
+/orders/1/participants/1 (GET and DELETE only)
+array of OrderItems
+[{
+id
+_order_id
+_user_id
+menu_item_id
+options: []
+}]
+
+GET /orders/1/participants/1/items/1 => OrderItem
+
+
+TODO:
+1. Provide payload for DELETE requests
+2. Order of calls in documentation
+
+
+https://tools.ietf.org/html/rfc7231#section-4.3
