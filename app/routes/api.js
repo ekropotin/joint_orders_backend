@@ -1,12 +1,7 @@
-const express = require('express');
+const app = require('express')();
 
-const router = express.Router();
+const routeUsers = require('./users');
 
-// Models
-const Product = require('../models/product');
+app.use('/users', routeUsers);
 
-// Routes
-Product.methods(['get', 'put', 'post', 'delete']);
-Product.register(router, '/products');
-
-module.exports = router;
+module.exports = app;

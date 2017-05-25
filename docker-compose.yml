@@ -2,6 +2,8 @@ version: '2'
 
 services:
   api:
+    volumes:
+      - ./app:/usr/src/app
     build: .
     ports:
       - "3000:3000"

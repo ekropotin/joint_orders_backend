@@ -1,0 +1,4 @@
+Requre from root tool
+
+Document users API
+- api to change password

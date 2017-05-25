@@ -1,16 +1,15 @@
-const restful = require('node-restful');
+const mongoose = require('mongoose');
+const autoIncrement = require('mongoose-sequence');
 
-const mongoose = restful.mongoose;
-
-const userSchema = new mongoose.Schema({
-  name: String,
-  fullName: String,
-  password_hash: String,
-  contactInfo: {
-    email: String,
-    phone: String
-  },
-  role: String
+const schema = new mongoose.Schema({
+  username: { type: String, required: true, index: { unique: true } },
+  role: { type: String, required: true },
+  password_hash: { type: String, required: true },
+  full_name: String,
+  email: String,
+  phone_number: String
 });
 
-module.exports = restful.model('user', userSchema);
+schema.plugin(autoIncrement, { inc_field: 'id' });
+
+module.exports = mongoose.model('User', schema);

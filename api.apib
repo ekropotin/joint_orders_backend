@@ -41,6 +41,18 @@ HOST: http://orders.apiblueprint.org/
 + menu_item_id: 1 (number) - menu item id
 + options: [1, 2, 3] (array[number])  - list of item options
 
+### UserRole (enum)
+- ADMIN (string)
+- ORGANIZER (string)
+- EATER (string)
+
+### User
++ id: 1 (number)
++ username: ekropotin (string) - user's login
++ full_name: Eugene (string) - user's name
++ email: testemail@gmail.com (string)
++ phone_number +71111111111 (string)
++ role: EATER (UserRole)
 
 ## Suppliers collection [/suppliers]
 
@@ -257,7 +269,7 @@ HOST: http://orders.apiblueprint.org/
 ### Remove user from the order [DELETE /orders/{order_id}/participants/{participant_id}]
 + Parameters
     + order_id: 1 (number) order's id
-    + participant_id: 1 (number) participant id
+    + participant_id: 1 (number) user id
 
 + Response 204
     + Attributes (array[number])
@@ -265,7 +277,7 @@ HOST: http://orders.apiblueprint.org/
 ## Order items collection [/orders/{order_id}/participants/{participant_id}]
 + Parameters
     + order_id: 1 (number) order's id
-    + participant_id: 1 (number) participant id
+    + participant_id: 1 (number) user id
 
 ### Get an order of the participant [GET]
 
@@ -289,7 +301,7 @@ HOST: http://orders.apiblueprint.org/
 ### Update an options for order item [PUT /orders/{order_id}/participants/{participant_id}/items/{order_item_id}]
 + Parameters
     + order_id: 1 (number) order's id
-    + participant_id: 1 (number) participant id
+    + participant_id: 1 (number) user id
     + order_item_id: 1 (number) order item id
 
 + Request (application/json)
@@ -302,7 +314,67 @@ HOST: http://orders.apiblueprint.org/
 ### Delete a menu item [DELETE /orders/{order_id}/participants/{participant_id}/items/{order_item_id}]
 + Parameters
     + order_id: 1 (number) order's id
-    + participant_id: 1 (number) participant id
+    + participant_id: 1 (number) user id
     + order_item_id: 1 (number) order item id
+
++ Response 204
+
+## Users collection [/users]
+
+### List All Users [GET]
+
++ Response 200 (application/json)
+    + Attributes (array[User])
+
+### Create a new User [POST]
+
++ Request (application/json)
+    + Attributes
+        + username: ekropotin (required, string) - user's login
+        + password: ekropotinpassword (required, string) - user's password
+        + role: EATER (required, UserRole)
+        + full_name: Eugene (string) - user's name
+        + email: testemail@gmail.com (string)
+        + phone_number +71111111111 (string)
+
++ Response 201 (application/json)
+    + Headers
+
+            Location: /users/1
+
+    + Attributes (User)
+
+### Get an user [GET /users/{id}]
++ Parameters
+    + id: 1 (number) user id
+
++ Response 200 (application/json)
+    + Attributes (User)
+
+### Update an User [PUT /users/{id}]
++ Parameters
+    + id: 1 (number) user id
+
++ Request (application/json)
+    + Attributes (User)
+
++ Response 200 (application/json)
+    + Attributes (User)
+
+### Delete an User [DELETE /users/{id}]
++ Parameters
+    + id: 1 (number) user id
+
++ Response 204
+
+### Update user's password [PUT /users/{id}/password]
++ Parameters
+    + id: 1 (number) user id
+
++ Request (application/json)
+    + Attributes
+        + current_password: currpass (string) - current password
+        + new_password: newpass (string) - new password
+        + new_password_confirm: newpass (string) - new password once again
 
 + Response 204
