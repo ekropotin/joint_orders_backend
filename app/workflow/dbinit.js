@@ -1,4 +1,4 @@
-const UserRoles = require('../constants/userRoles');
+const UserRoles = require('../constants/user_roles');
 const encryptUtils = require('../utils/encrypt');
 const UserModel = require('../models/user');
 
@@ -6,7 +6,6 @@ const ADMIN_DEFAULT_NAME = 'admin';
 const ADMIN_DEFAULT_PASSWORD = 'admin';
 
 module.exports = () => {
-  // Can't require on the top of file since autoIncrement plugin could be not initialized.
   console.log('Initializing database');
   // Create default admin if neccessary
   UserModel.find({ username: ADMIN_DEFAULT_NAME }, (err, results) => {

@@ -8,6 +8,8 @@ extends: 'airbnb-base'
 rules:
   comma-dangle:
     - off
+  func-names:
+    - off
   no-param-reassign:
     - off
   no-shadow:

@@ -1,7 +1,10 @@
-const app = require('express')();
+const router = require('express').Router();
 
 const routeUsers = require('./users');
+const routeSuppliers = require('./suppliers');
 
-app.use('/users', routeUsers);
+router.use('/users', routeUsers);
+router.use('/suppliers', routeSuppliers);
+// TODO: other first level routes here
 
-module.exports = app;
+module.exports = router;

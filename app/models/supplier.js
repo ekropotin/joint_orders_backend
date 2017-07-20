@@ -1,9 +1,15 @@
 const mongoose = require('mongoose');
+const commonPlugin = require('./plugins/common.js');
 
 const schema = new mongoose.Schema({
-  name: String,
-  sku: String,
-  price: Number
+  _id: Number,
+  name: { type: String, required: true },
+  description: String,
+  address: String,
+  phone_numbers: [String],
+  rating: Number
+
 });
 
-module.exports = schema;
+schema.plugin(commonPlugin('Supplier'));
+module.exports = mongoose.model('Supplier', schema);

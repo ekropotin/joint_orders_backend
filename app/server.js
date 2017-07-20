@@ -1,8 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const dbInit = require('./workflow/dbinit');
 
+const dbInit = require('./workflow/dbinit');
 const routeApi = require('./routes/api');
 
 console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
@@ -11,6 +11,7 @@ const MONGO_URL = 'mongodb://mongodb:27017/maindb';
 const API_PORT = process.env.PORT || '3000';
 
 mongoose.connect(MONGO_URL, { config: { autoIndex: process.env.NODE_ENV !== 'production' } });
+
 const dbConnection = mongoose.connection;
 
 dbConnection.on('error', err => console.log(`connection error: ${err.message}`));
