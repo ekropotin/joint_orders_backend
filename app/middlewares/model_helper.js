@@ -16,6 +16,7 @@ module.exports = function (Model) {
 
     findOne(getQueryFunc) {
       return function (req, res) {
+        console.log(JSON.stringify(getQueryFunc(req)));
         Model.findOne(getQueryFunc(req), (err, results) => {
           if (err) {
             res.status(400).send(err.errmsg);
@@ -29,6 +30,24 @@ module.exports = function (Model) {
 
           res.setHeader('Content-Type', 'application/json');
           res.status(200).json(results);
+        });
+      };
+    },
+
+    checkRoute(idFieldName) {
+      return function (req, res, next) {
+        Model.findOne({ _id: req.params[idFieldName] }, (err, results) => {
+          if (err) {
+            res.status(400).send(err.errmsg);
+            return;
+          }
+
+          if (!results) {
+            res.status(404).send();
+            return;
+          }
+
+          next();
         });
       };
     },

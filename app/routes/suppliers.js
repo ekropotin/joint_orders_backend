@@ -9,6 +9,8 @@ router.get('/:supplier_id', modelHelper.findOne(req => ({ _id: req.params.suppli
 
 router.post('/', modelHelper.create(req => Object.assign({}, req.body)));
 
+router.use('/:supplier_id/menu_items', modelHelper.checkRoute('supplier_id'));
+
 router.use('/:supplier_id/menu_items', menuItemsRoute);
 
 module.exports = router;
