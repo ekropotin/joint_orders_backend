@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const dbInit = require('./workflow/dbinit');
 const routeApi = require('./routes/api');
@@ -22,6 +24,12 @@ dbConnection.once('open', () => {
 
 // Express
 const app = express();
+
+// TODO: expiration?
+app.use(session({
+  store: new MongoStore({ mongooseConnection: dbConnection }),
+  secret: '6094294724'
+}));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

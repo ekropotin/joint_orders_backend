@@ -6,6 +6,9 @@ env:
 extends: 'airbnb-base'
 
 rules:
+  max-len:
+    - 2
+    - code: 140
   comma-dangle:
     - off
   func-names:
